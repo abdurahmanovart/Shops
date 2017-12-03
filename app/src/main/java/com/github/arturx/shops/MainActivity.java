@@ -1,7 +1,17 @@
 package com.github.arturx.shops;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.arturx.shops.bean.BaseResponse;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -9,5 +19,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getData();
+
     }
+
+    private void getData() {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://app.ecco-shoes.ru/shops/list")
+                .newBuilder();
+        String url = urlBuilder.build().toString();
+        final Request request = new Request.Builder()
+                .url(url)
+                .method("GET", null)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                // TODO: 03.12.17 handle Failure
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    byte[] bytes = response.body().bytes();
+                    final BaseResponse baseResponse = objectMapper.readValue(bytes, BaseResponse.class);
+                    // TODO: 03.12.17 throw into fragment
+                } else {
+                    // TODO: 03.12.17 Handle error
+                }
+            }
+        });
+    }
+
+
 }
