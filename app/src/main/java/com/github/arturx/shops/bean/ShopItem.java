@@ -1,5 +1,9 @@
 package com.github.arturx.shops.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
@@ -9,7 +13,12 @@ import com.google.common.base.Objects;
  * Created by arturx on 03.12.17.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ShopItem {
+public class ShopItem implements Parcelable {
+
+    public static final ClassCreator CREATOR = new ClassCreator();
+
+    public ShopItem() {
+    }
 
     @JsonProperty("name")
     private String mName;
@@ -44,6 +53,42 @@ public class ShopItem {
     @JsonProperty("latitude")
     private double mLatitude;
 
+    protected ShopItem(Parcel in) {
+        mName = in.readString();
+        mCountry = in.readString();
+        mRegion = in.readString();
+        mTown = in.readString();
+        mAdress = in.readString();
+        mMetro = in.readString();
+        mPhone = in.readString();
+        mWorkTime = in.readString();
+        mType = in.readString();
+        mLongtitude = in.readDouble();
+        mLatitude = in.readDouble();
+    }
+
+    @JsonIgnore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mName);
+        dest.writeString(mCountry);
+        dest.writeString(mRegion);
+        dest.writeString(mTown);
+        dest.writeString(mAdress);
+        dest.writeString(mMetro);
+        dest.writeString(mPhone);
+        dest.writeString(mWorkTime);
+        dest.writeString(mType);
+        dest.writeDouble(mLongtitude);
+        dest.writeDouble(mLatitude);
+    }
+
+    @JsonIgnore
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public String getName() {
         return mName;
     }
@@ -60,7 +105,7 @@ public class ShopItem {
         return mTown;
     }
 
-    public String getAdress() {
+    public String getAddress() {
         return mAdress;
     }
 
@@ -88,6 +133,7 @@ public class ShopItem {
         return mLatitude;
     }
 
+    @JsonIgnore
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,6 +152,7 @@ public class ShopItem {
                 Objects.equal(mType, shopItem.mType);
     }
 
+    @JsonIgnore
     @Override
     public int hashCode() {
         return Objects.hashCode(mName,
@@ -121,6 +168,7 @@ public class ShopItem {
                 mLatitude);
     }
 
+    @JsonIgnore
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -137,4 +185,17 @@ public class ShopItem {
                 .add("mLatitude", mLatitude)
                 .toString();
     }
+
+    public static final class ClassCreator implements Creator<ShopItem> {
+        @Override
+        public ShopItem createFromParcel(Parcel in) {
+            return new ShopItem(in);
+        }
+
+        @Override
+        public ShopItem[] newArray(int size) {
+            return new ShopItem[size];
+        }
+    }
+
 }
