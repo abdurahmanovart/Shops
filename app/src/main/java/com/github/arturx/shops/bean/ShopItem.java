@@ -33,7 +33,7 @@ public class ShopItem implements Parcelable {
     private String mTown;
 
     @JsonProperty("address")
-    private String mAdress;
+    private String mAddress;
 
     @JsonProperty("metro")
     private String mMetro;
@@ -58,7 +58,7 @@ public class ShopItem implements Parcelable {
         mCountry = in.readString();
         mRegion = in.readString();
         mTown = in.readString();
-        mAdress = in.readString();
+        mAddress = in.readString();
         mMetro = in.readString();
         mPhone = in.readString();
         mWorkTime = in.readString();
@@ -74,7 +74,7 @@ public class ShopItem implements Parcelable {
         dest.writeString(mCountry);
         dest.writeString(mRegion);
         dest.writeString(mTown);
-        dest.writeString(mAdress);
+        dest.writeString(mAddress);
         dest.writeString(mMetro);
         dest.writeString(mPhone);
         dest.writeString(mWorkTime);
@@ -106,7 +106,7 @@ public class ShopItem implements Parcelable {
     }
 
     public String getAddress() {
-        return mAdress;
+        return mAddress;
     }
 
     public String getMetro() {
@@ -133,7 +133,6 @@ public class ShopItem implements Parcelable {
         return mLatitude;
     }
 
-    @JsonIgnore
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -145,21 +144,20 @@ public class ShopItem implements Parcelable {
                 Objects.equal(mCountry, shopItem.mCountry) &&
                 Objects.equal(mRegion, shopItem.mRegion) &&
                 Objects.equal(mTown, shopItem.mTown) &&
-                Objects.equal(mAdress, shopItem.mAdress) &&
+                Objects.equal(mAddress, shopItem.mAddress) &&
                 Objects.equal(mMetro, shopItem.mMetro) &&
                 Objects.equal(mPhone, shopItem.mPhone) &&
                 Objects.equal(mWorkTime, shopItem.mWorkTime) &&
                 Objects.equal(mType, shopItem.mType);
     }
 
-    @JsonIgnore
     @Override
     public int hashCode() {
         return Objects.hashCode(mName,
                 mCountry,
                 mRegion,
                 mTown,
-                mAdress,
+                mAddress,
                 mMetro,
                 mPhone,
                 mWorkTime,
@@ -168,7 +166,6 @@ public class ShopItem implements Parcelable {
                 mLatitude);
     }
 
-    @JsonIgnore
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -176,7 +173,7 @@ public class ShopItem implements Parcelable {
                 .add("mCountry", mCountry)
                 .add("mRegion", mRegion)
                 .add("mTown", mTown)
-                .add("mAdress", mAdress)
+                .add("mAddress", mAddress)
                 .add("mMetro", mMetro)
                 .add("mPhone", mPhone)
                 .add("mWorkTime", mWorkTime)

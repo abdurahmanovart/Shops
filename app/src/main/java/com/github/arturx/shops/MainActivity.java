@@ -65,7 +65,11 @@ public class MainActivity extends AppCompatActivity implements ShopsFragment.OnS
 
     @Override
     public void onFragmentInteraction(ShopItem item) {
-        // TODO: 03.12.17 show on map
-        Toast.makeText(getApplicationContext(), "coordinates are" + item.getLongtitude(), Toast.LENGTH_LONG).show();
+        System.out.println("LOLEWLEMklAWND");
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .replace(R.id.maps_container, MapViewFragment.newInstance(item.getLatitude(), item.getLongtitude()))
+                .commit();
+        Toast.makeText(this, "coordinates are" + item.getCountry(), Toast.LENGTH_LONG).show();
     }
 }

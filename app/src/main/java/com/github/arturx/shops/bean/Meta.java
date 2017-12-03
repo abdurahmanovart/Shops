@@ -31,7 +31,6 @@ public class Meta {
         return mRowsCount;
     }
 
-    @JsonIgnore
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -42,7 +41,6 @@ public class Meta {
     }
 
 
-    @JsonIgnore
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,7 +51,6 @@ public class Meta {
                 Objects.equal(mErrorMessage, meta.mErrorMessage);
     }
 
-    @JsonIgnore
     @Override
     public int hashCode() {
         return Objects.hashCode(mCode, mErrorMessage, mRowsCount);
